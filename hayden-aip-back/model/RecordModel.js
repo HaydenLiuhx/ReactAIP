@@ -8,6 +8,8 @@ const mongoose = require('mongoose')
 const recordSchema = new mongoose.Schema({
   creditor_id: {type: String, required: true}, // creditor(Zhai Zhu) ->user_id
   debtor_id: {type: String, required: true}, // debtor -> user_id
+  name: {type: String, required: true},
+  desc: {type: String},
   imgs: {type: Array, default: []}, // json string of n*image file names
   create_time: {type: Number, default: Date.now}, // create time
   status: {type: Number, default: 1}, // status: 1.processing 2.finish

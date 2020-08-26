@@ -29,6 +29,7 @@ serve build
 
 ```json
 yarn add antd
+yarn add @ant-design/compatible
 ```
 
 ##### Implement on-demand packaging of components -> Download dependent modules:

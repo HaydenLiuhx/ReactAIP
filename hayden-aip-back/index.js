@@ -12,7 +12,7 @@ const md5 = require('blueimp-md5')
 // get router object
 const router = express.Router()
 
-//get all users
+//1. get all users
 router.get('/api/users', (req, res) => {
 
     UserModel.find()
@@ -25,6 +25,47 @@ router.get('/api/users', (req, res) => {
             console.error('Get user list exception', error)
             res.send({ status: 1, msg: 'Get user list exception, Please try again' })
         })
+})
+
+//2. login in 
+router.post('/api/login', async (req, res) => {
+    //check user isavailable?
+    try {
+        const { username, password } = req.body
+        console.log(req.body)
+        console.log(req.query)
+        /*
+        Query the database users based on username and password, 
+        if not, return a message indicating an error, 
+        if yes, return a login success message (including user) 
+        */
+        UserModel.findOne({ username, password: md5(password) })
+            .then(user => {
+                if (user) { // success
+                    // cookie(userid: user._id), send to browser
+                    res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 })
+                    if (user.role_id) {
+                        RoleModel.findOne({ _id: user.role_id })
+                            .then(role => {
+                                user._doc.role = role
+                                console.log('role user', user)
+                                res.send({ status: 0, data: user })
+                            })
+                    } else {
+                        user._doc.role = { menus: [] }
+                        // return user data
+                        res.send({ status: 0, data: user })
+                    }
+
+                } else {// fail
+                    res.send({ status: 1, msg: 'Username or Password is Wrong!' })
+                }
+            })
+    } catch { (error => {
+        console.error('Login Exception', error)
+        res.send({ status: 1, msg: 'Login Exception, Please Try Again' })
+    })
+}
 })
 
 function pageFilter(arr, pageNum, pageSize) {

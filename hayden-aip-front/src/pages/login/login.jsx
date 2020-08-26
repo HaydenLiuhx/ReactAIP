@@ -6,6 +6,10 @@ import './login.less'
 import logo from '../../assets/images/logo.png'
 import '@ant-design/compatible/assets/index.css';
 import {reqLogin} from '../../api'
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
+// eslint-disable-next-line
+import {Redirect} from 'react-router-dom'
 //const Item = Form.Item; 
 //Login in component
 class NormalLoginForm extends React.Component {
@@ -24,8 +28,8 @@ class NormalLoginForm extends React.Component {
                     //show login message
                     message.success("Login Successfully")
                     const user = result.data
-                    // memoryUtils.user = user //save in memory
-                    // storageUtils.saveUser(user) //save in localstorage
+                    memoryUtils.user = user //save in memory
+                    storageUtils.saveUser(user) //save in localstorage
                     //jump to home -> push() or replace()
                     this.props.history.replace('/')
                 } else {
@@ -69,6 +73,11 @@ class NormalLoginForm extends React.Component {
     }
 
     render() {
+        //if user has login, jump to /admin
+        // const user = memoryUtils.user
+        // if(user && user._id) {
+        //     return <Redirect to='/admin'/>
+        // }
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
@@ -94,7 +103,7 @@ class NormalLoginForm extends React.Component {
                                     ],
                                 })(
                                 <Input 
-                                    prefix={<UserOutlined className="site-form-item-icon" />} 
+                                    prefix={<UserOutlined className="site-form-item-icon" style={{ color: 'rgba(0,0,0,.25)' }}/>} 
                                     type="user" 
                                     placeholder="Username" 
                                     className="login-form-input" />,
@@ -109,7 +118,7 @@ class NormalLoginForm extends React.Component {
                                     ],
                                 })(
                                 <Input
-                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    prefix={<LockOutlined className="site-form-item-icon" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                                     type="password"
                                     placeholder="Password"
                                     className="login-form-input"

@@ -5,8 +5,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'antd/dist/antd.css'
-
 import App from './App'
+import storageUtils from './utils/storageUtils';
+import memoryUtils from './utils/memoryUtils';
+//Read user in localstorage and save to memory
+const user = storageUtils.getUser()
+memoryUtils.user = user
 
-//将App组件标签渲染到index页面的div上
+//Render the App component label to the div of the index page
 ReactDOM.render(<App/>, document.getElementById('root'))

@@ -20,7 +20,7 @@ module.exports = override(
           javascriptEnabled: true,
           //custome theme
           //yarn add less less-loader
-          modifyVars: { '@primary-color': '#1DA57A' },
+          modifyVars: { '@primary-color': '#182C61' },
         },
       }),
 

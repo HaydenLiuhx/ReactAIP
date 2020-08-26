@@ -114,7 +114,7 @@ npm install nodemon
 
 ## Port
 
-Front-end: localhost:8000
+Front-end: localhost:7000
 
-Back-end: localhost:7000
+Back-end: localhost:6000
 

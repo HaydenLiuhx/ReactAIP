@@ -6,7 +6,7 @@ import logo from './images/logo.png'
 
 //const Item = Form.Item; //不能写在import前
 
-//登录的路由组件
+//Login in component
 
 export default class Login extends Component {
 

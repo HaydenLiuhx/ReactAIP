@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   username: {type: String, required: true}, // Username
   password: {type: String, required: true}, // Password
   create_time: {type: Number, default: Date.now},
+  role_id: String
 })
 
 // 3. define Model()

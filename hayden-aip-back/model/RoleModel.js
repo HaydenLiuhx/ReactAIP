@@ -1,20 +1,20 @@
 /*
-能操作roles集合数据的Model
+Models that can manipulate role collection data
  */
-// 1.引入mongoose
+// 1.import mongoose
 const mongoose = require('mongoose')
 
-// 2.字义Schema(描述文档结构)
+// 2.Schema(Describe the document structure)
 const roleSchema = new mongoose.Schema({
-  name: {type: String, required: true}, // 角色名称
-  auth_name: String, // 授权人
-  auth_time: Number, // 授权时间
-  create_time: {type: Number, default: Date.now}, // 创建时间
-  menus: Array // 所有有权限操作的菜单path的数组
+  name: {type: String, required: true}, // role's name
+  auth_name: String, // authorizer
+  auth_time: Number, // Authorization time
+  create_time: {type: Number, default: Date.now}, // create time
+  menus: Array // Array of all menu paths that have permission to operate
 })
 
-// 3. 定义Model(与集合对应, 可以操作集合)
+// 3. Define Model (corresponding to collection, can operate collection)
 const RoleModel = mongoose.model('roles', roleSchema)
 
-// 4. 向外暴露Model
+// 4. export Model
 module.exports = RoleModel

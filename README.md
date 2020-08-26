@@ -29,6 +29,7 @@ serve build
 
 ```json
 yarn add antd
+yarn add @ant-design/compatible
 ```
 
 ##### Implement on-demand packaging of components -> Download dependent modules:
@@ -114,7 +115,7 @@ npm install nodemon
 
 ## Port
 
-Front-end: localhost:8000
+Front-end: localhost:7000
 
-Back-end: localhost:7000
+Back-end: localhost:6000
 

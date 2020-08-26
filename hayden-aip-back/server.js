@@ -1,30 +1,29 @@
 /*
-应用的启动模块
-1. 通过express启动服务器
-2. 通过mongoose连接数据库
-  说明: 只有当连接上数据库后才去启动服务器
-3. 使用中间件
+Application startup module
+1. Start the server via express
+2. Connect to the database through mongoose
+  Note: Only start the server after connecting to the database
+3. Use middleware
  */
 const mongoose = require('mongoose')
 const express = require('express')
-const app = express() // 产生应用对象
+const app = express() // Generate application objects
 
-// 声明使用静态中间件
+// Declare the use of static middleware
 app.use(express.static('public'))
-// 声明使用解析post请求的中间件
-app.use(express.urlencoded({extended: true})) // 请求体参数是: name=tom&pwd=123
-app.use(express.json()) // 请求体参数是json结构: {name: tom, pwd: 123}
-// 声明使用解析cookie数据的中间件
+// Declare to use middleware for parsing post requests
+app.use(express.urlencoded({extended: true})) // The request body parameter is: name=tom&pwd=123
+app.use(express.json()) // The request body parameter is json: {name: tom, pwd: 123}
+// Declare the use of middleware that parses cookie data
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
-// 声明使用路由器中间件
+// Declare the use of router middleware
 const indexRouter = require('./index')
 app.use('/', indexRouter)  //
 
 const fs = require('fs')
 
 
-// 通过mongoose连接数据库
 mongoose.connect('mongodb://localhost:27017/hayden-aip', {
     useNewUrlParser: true,
     useUnifiedTopology: true,

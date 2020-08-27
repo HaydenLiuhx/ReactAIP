@@ -32,11 +32,11 @@ export const reqLogin = (username, password) =>
 export const reqRecords = (pageNum, pageSize) => 
     ajax(BASE + '/manage/record/list' , {pageNum, pageSize}) 
 //3. update record status
-export const reqUpdateStatus = (productId, status) => 
-    ajax(BASE + '/manage/product/updateStatus', {productId, status}, 'POST')
+export const reqUpdateStatus = (recordId, status) => 
+    ajax(BASE + '/manage/record/updateStatus', {recordId, status}, 'POST')
 //4. search record
-export const reqSearchProducts = (pageNum, pageSize, searchName, searchType) => 
-    ajax(BASE + '/manage/product/search', { 
+export const reqSearchRecords = (pageNum, pageSize, searchName, searchType) => 
+    ajax(BASE + '/manage/cord/search', { 
         pageNum, 
         pageSize, 
         [searchType]: searchName,

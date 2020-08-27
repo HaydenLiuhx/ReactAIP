@@ -36,7 +36,7 @@ export const reqUpdateStatus = (recordId, status) =>
     ajax(BASE + '/manage/record/updateStatus', {recordId, status}, 'POST')
 //4. search record
 export const reqSearchRecords = (pageNum, pageSize, searchName, searchType) => 
-    ajax(BASE + '/manage/cord/search', { 
+    ajax(BASE + '/manage/record/search', { 
         pageNum, 
         pageSize, 
         [searchType]: searchName,

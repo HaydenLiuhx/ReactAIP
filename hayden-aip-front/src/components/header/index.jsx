@@ -74,7 +74,7 @@ class Header extends Component {
     componentDidMount () {
         this.getTime()
         this.getWeather()
-        //this._isMounted = false;
+        this._isMounted = false; //children page -> title disappear
     }
     componentWillUnmount () {
         clearInterval(this.intervalId)

@@ -117,7 +117,7 @@ export default class RecordHome extends Component {
             <span>
             <Select
                 value={searchType}
-                style={{width: 150}}
+                style={{width: 250}}
                 onChange={value => this.setState({searchType: value})}
             >
                 <Option value="recordName">Search by Name</Option>

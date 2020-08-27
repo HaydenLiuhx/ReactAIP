@@ -12,10 +12,10 @@ export const reqWeather = (city) => {
             console.log('jsonp()', err, data)
             //success
             if (!err && data.cod === 200) {
-                const dayPictureUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+                const weatherIcon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
                 const weather = data.weather[0].main
                 const temperature = parseInt(data.main.temp - 273.15)
-                resolve({ dayPictureUrl, weather, temperature })
+                resolve({ weatherIcon, weather, temperature })
             }
             else {
                 //fail

@@ -8,6 +8,7 @@ import { formateDate } from '../../utils/dateUtils'
 import LinkButton from '../link-button'
 import './index.less'
 import { Modal } from 'antd'
+import {ADDRESS} from '../../utils/constants'
 /*
 Header Router
 */
@@ -67,7 +68,7 @@ class Header extends Component {
             weatherIcon, 
             weather, 
             temperature
-        } = await reqWeather('Sydney')
+        } = await reqWeather(ADDRESS)
         this.setState({weatherIcon, weather, temperature})
     }
     componentDidMount () {
@@ -92,6 +93,7 @@ class Header extends Component {
                 <div className="header-left">
                     <span>{currentTime}</span>
                     <img src={weatherIcon} alt=""></img>
+                    <span style={{ margin:15 }}>{ADDRESS}</span>
                     <span>{weather}</span>
                     <span className="temp">{temperature}°C</span>
                 </div>

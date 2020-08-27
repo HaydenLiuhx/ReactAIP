@@ -28,3 +28,16 @@ export const reqWeather = (city) => {
 //1. user login
 export const reqLogin = (username, password) =>
     ajax(BASE + '/login', { username, password }, 'POST')
+//2. get all records
+export const reqRecords = (pageNum, pageSize) => 
+    ajax(BASE + '/manage/record/list' , {pageNum, pageSize}) 
+//3. update record status
+export const reqUpdateStatus = (productId, status) => 
+    ajax(BASE + '/manage/product/updateStatus', {productId, status}, 'POST')
+//4. search record
+export const reqSearchProducts = (pageNum, pageSize, searchName, searchType) => 
+    ajax(BASE + '/manage/product/search', { 
+        pageNum, 
+        pageSize, 
+        [searchType]: searchName,
+})

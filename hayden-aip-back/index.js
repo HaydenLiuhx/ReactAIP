@@ -159,8 +159,8 @@ router.get('/api/manage/record/search', (req, res) => {
         res.send({status: 0, data: pageFilter(records, pageNum, pageSize)})
       })
       .catch(error => {
-        console.error('搜索商品列表异常', error)
-        res.send({status: 1, msg: '搜索商品列表异常, 请重新尝试'})
+        console.error('Search Record Exception', error)
+        res.send({status: 1, msg: 'Search Record Exception, Please Try it Again!'})
       })
   })
 

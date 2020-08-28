@@ -41,3 +41,19 @@ export const reqSearchRecords = (pageNum, pageSize, searchName, searchType) =>
         pageSize, 
         [searchType]: searchName,
 })
+//5. delete picture
+export const reqDeleteImg = (name) => 
+ajax(BASE + '/manage/img/delete', {name}, 'POST')
+//6. add or update record
+export const reqAddOrUpdateRecord = (record) => 
+ajax(BASE + '/manage/record/' + (record._id?'update': 'add'), 
+                                record, 'POST')
+//7. show all users
+export const reqUsers = () => 
+    ajax(BASE + '/users')
+//8. delete the user
+export const reqDeleteUser = (userId) => 
+    ajax(BASE + '/manage/user/delete', {userId}, 'POST')
+//9. add user or update user
+export const reqAddOrUpdateUser = (user) => 
+    ajax(BASE + '/manage/user/' + (user._id ? 'update' : 'add'), user, 'POST')

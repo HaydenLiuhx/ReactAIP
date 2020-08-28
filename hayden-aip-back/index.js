@@ -177,7 +177,7 @@ router.post('/api/manage/record/update', (req, res) => {
       })
   })
 
-  // Update record status (processing | finished)
+  // 10. Update record status (processing | finished)
 router.post('/api/manage/record/updateStatus', (req, res) => {
     const {recordId, status} = req.body
     console.log(req.body)
@@ -190,6 +190,54 @@ router.post('/api/manage/record/updateStatus', (req, res) => {
         res.send({status: 1, msg: 'Update Record Status Exception, Please Try Again!'})
       })
   })
+
+  // 11. add role
+router.post('/api/manage/role/add', (req, res) => {
+  const {roleName} = req.body
+  RoleModel.create({name: roleName})
+    .then(role => {
+      res.send({status: 0, data: role})
+    })
+    .catch(error => {
+      console.error('Add Role Exception', error)
+      res.send({status: 1, msg: 'Add Role Exception, Please Try Again!'})
+    })
+})
+
+// 12. get role's list
+router.get('/api/manage/role/list', (req, res) => {
+  RoleModel.find()
+    .then(roles => {
+      res.send({status: 0, data: roles})
+    })
+    .catch(error => {
+      console.error('Get Role List Exception', error)
+      res.send({status: 1, msg: 'Get Role List Exception, Please Try Again'})
+    })
+})
+
+// 13. Update role (Setting permissions)
+router.post('/api/manage/role/update', (req, res) => {
+  const role = req.body
+  role.auth_time = Date.now()
+  RoleModel.findOneAndUpdate({_id: role._id}, role)
+    .then(oldRole => {
+      res.send({status: 0, data: {...oldRole._doc, ...role}})
+    })
+    .catch(error => {
+      console.error('Setting permissions Exception', error)
+      res.send({status: 1, msg: 'Setting permissions Exception, Please Try Again'})
+    })
+})
+
+//14. delete the role
+router.post('/api/manage/role/delete', (req, res) => {
+  const {roleId} = req.body
+  RoleModel.deleteOne({_id: roleId})
+    .then((doc) => {
+      res.send({status: 0})
+    })
+})
 
 function pageFilter(arr, pageNum, pageSize) {
     pageNum = pageNum * 1

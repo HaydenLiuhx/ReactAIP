@@ -5,6 +5,7 @@ import { PAGE_SIZE } from '../../utils/constants'
 import LinkButton from '../../components/link-button'
 import { reqSearchRecords, reqRecords, reqUpdateStatus } from '../../api'
 import { PlusOutlined } from '@ant-design/icons'
+import {formateDate} from '../../utils/dateUtils'
 const Option = Select.Option
 /*
 Home Router
@@ -19,6 +20,12 @@ export default class RecordHome extends Component {
     }
     initColumns = () => {
         this.columns = [
+            {
+                width: 180,
+                title: 'Create Time',
+                dataIndex: 'create_time',
+                render: formateDate
+            },
             {
                 width: 100,
                 title: 'Creditor Name',
@@ -159,7 +166,7 @@ export default class RecordHome extends Component {
                     defaultPageSize: PAGE_SIZE,
                     showQuickJumper: true,
                     onChange: this.getRecords
-                    //(pageNum) => {this.getProducts(pageNum)}
+                    //(pageNum) => {this.getRecords(pageNum)}
                 }}
                 ></Table>
             </Card>

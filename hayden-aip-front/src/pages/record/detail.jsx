@@ -31,7 +31,7 @@ export default class RecordDetail extends Component {
             </span>
         )
         return (
-            <Card title={title} className="product-detail">
+            <Card title={title} className="record-detail">
                 <List>
                     <Item>
                         <span className="left">Status =></span>
@@ -57,18 +57,18 @@ export default class RecordDetail extends Component {
                         <span className="left">Pictures:</span>
                         <span className="img">
                             <img
-                            className="product-img" 
+                            className="record-img" 
                             src="https://images-na.ssl-images-amazon.com/images/I/81f1sNBXtOL._AC_SX679_.jpg" 
                             alt=""
                             ></img>
                             <img
-                            className="product-img"  
+                            className="record-img"  
                             src="https://images-na.ssl-images-amazon.com/images/I/71JF8H6rCxL._AC_SX679_.jpg" 
                             alt=""
                             ></img>
                             {/* {
                                 imgs.map(img => (
-                                    <img key={img} className="product-img" src={BASE_IMG_URL + img} alt="img" />
+                                    <img key={img} className="record-img" src={BASE_IMG_URL + img} alt="img" />
                                 ) )
                             } */}
                         </span>

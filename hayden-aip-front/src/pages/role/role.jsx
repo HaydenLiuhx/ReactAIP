@@ -44,6 +44,63 @@ export default class Role extends Component {
             },
         ]
     }
+    getRoles = async () => {
+        const result = await reqRoles()
+        if (result.status === 0) {
+            const roles = result.data
+            this.setState({
+                roles: roles
+            })
+        }
+    }
+
+    onRow = (role) => {
+        return {
+            onClick: event => { //click row
+                console.log('row onClick', role)
+                this.setState({
+                    role: role
+                })
+            },
+        }
+    }
+    addRole = () => {
+        this.form.validateFields( async(error, values) => {
+            if (!error) {
+                //hide confirmation box
+                this.setState({
+                    isShowAdd: false
+                })
+                //Collect data -> send request -> 
+                //have results -> respond, process, update
+                const {roleName} = values
+                this.form.resetFields()//clear input box
+                const result = await reqAddRole(roleName)
+                if (result.status===0) {
+                    message.success('Update Role Successfully')
+                    //this.getRoles() //Change another way
+                    //new role
+                    const role = result.data
+                    //update role status
+                    /* const roles = this.state.roles //1. not good enough
+                    roles.push(role)
+                    //Delete
+                    //roles.splice()
+                    this.setState({
+                        roles:roles
+                    }) */
+                    //2. Generate a copy first, then update it with setState
+                    //const roles = [...this.state.roles] 
+                    //3, Update roles status, update/modify based on original status data
+                    this.setState((state, props) => ({
+                        roles: [...this.state.roles, role]
+                    }))
+                } else {
+                    message.error('Add Role Failed')
+                }   
+            }
+        })
+    }
     updateRole = async () => {
         //Hide confirmation box
         this.setState({

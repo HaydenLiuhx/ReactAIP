@@ -6,8 +6,10 @@ const mongoose = require('mongoose')
 
 // 2.Schema(Describe the document structure)
 const recordSchema = new mongoose.Schema({
-  creditor_id: {type: String, required: true}, // creditor(Zhai Zhu) ->user_id
-  debtor_id: {type: String, required: true}, // debtor -> user_id
+  creditor_username: {type: String, required: true}, // creditor(Zhai Zhu) ->user_id
+  debtor_username: {type: String, required: true}, // debtor -> user_id
+  name: {type: String, required: true},
+  desc: {type: String},
   imgs: {type: Array, default: []}, // json string of n*image file names
   create_time: {type: Number, default: Date.now}, // create time
   status: {type: Number, default: 1}, // status: 1.processing 2.finish
@@ -20,3 +22,5 @@ const RecordModel = mongoose.model('records', recordSchema)
 
 // 4. export Model
 module.exports = RecordModel
+
+//RecordModel.db.dropCollection('records')

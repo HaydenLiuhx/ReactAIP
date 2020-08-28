@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
   username: {type: String, required: true}, // Username
   password: {type: String, required: true}, // Password
   create_time: {type: Number, default: Date.now},
+  phone: String,
+  email: String,
   role_id: String
 })
 

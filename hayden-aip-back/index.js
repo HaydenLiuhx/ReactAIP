@@ -68,6 +68,177 @@ router.post('/api/login', async (req, res) => {
 }
 })
 
+//3. add new user
+router.post('/api/manage/user/add', (req, res) => {
+    const {username, password} = req.body
+    UserModel.findOne({username})
+      .then(user => {
+        // if user exist
+        if (user) {
+          // return error
+          res.send({status: 1, msg: 'This User is Existed'})
+          return new Promise(() => {
+          })
+        } else { // Not exist
+          // Save
+          return UserModel.create({...req.body, password: md5(password || 'admin')})
+        }
+      })
+      .then(user => {
+        res.send({status: 0, data: user})
+      })
+      .catch(error => {
+        console.error('Registering Exception', error)
+        res.send({status: 1, msg: 'Adding New User Exception, Please Try it Again'})
+      })
+  })
+
+  //4. update user
+  router.post('/api/manage/user/update', (req, res) => {
+    const user = req.body
+    UserModel.findOneAndUpdate({_id: user._id}, user)
+      .then(oldUser => {
+        const data = Object.assign(oldUser, user)
+        // return
+        res.send({status: 0, data})
+      })
+      .catch(error => {
+        console.error('Updating User Exception', error)
+        res.send({status: 1, msg: 'Updating User Exception, Please Try Again!'})
+      })
+  })
+
+  //5. delete user
+router.post('/api/manage/user/delete', (req, res) => {
+    const {userId} = req.body
+    UserModel.deleteOne({_id: userId})
+      .then((doc) => {
+        res.send({status: 0})
+      })
+  })
+
+  //6. add record
+router.post('/api/manage/record/add', (req, res) => {
+    const record = req.body
+    RecordModel.create(record)
+      .then(record => {
+        res.send({status: 0, data: record})
+      })
+      .catch(error => {
+        console.error('Adding Record Exception', error)
+        res.send({status: 1, msg: 'Adding Record Exception, Please Try it Again!'})
+      })
+  })
+
+  // 7. get record by page
+router.get('/api/manage/record/list', (req, res) => {
+    const {pageNum, pageSize} = req.query
+    RecordModel.find({})
+      .then(records => {
+        res.send({status: 0, data: pageFilter(records, pageNum, pageSize)})
+      })
+      .catch(error => {
+        console.error('Get Record List Exception', error)
+        res.send({status: 1, msg: 'Get Record List Exception, Please Try it Again'})
+      })
+  })
+
+  //8. search record list
+router.get('/api/manage/record/search', (req, res) => {
+    const {pageNum, pageSize, searchName, recordName, recordDesc} = req.query
+    let contition = {}
+    console.log(req.query)
+    if (recordName) {
+      contition = {name: new RegExp(`^.*${recordName}.*$`)}
+    } else if (recordDesc) {
+      contition = {desc: new RegExp(`^.*${recordDesc}.*$`)}
+    }
+    console.log(contition)
+    RecordModel.find(contition)
+      .then(records => {
+        res.send({status: 0, data: pageFilter(records, pageNum, pageSize)})
+      })
+      .catch(error => {
+        console.error('Search Record Exception', error)
+        res.send({status: 1, msg: 'Search Record Exception, Please Try it Again!'})
+      })
+  })
+
+  //9.update record
+router.post('/api/manage/record/update', (req, res) => {
+    const record = req.body
+    RecordModel.findOneAndUpdate({_id: record._id}, record)
+      .then(oldRecord => {
+        res.send({status: 0})
+      })
+      .catch(error => {
+        console.error('Update Record Exception', error)
+        res.send({status: 1, msg: 'Update Record Exception, Please Try Again'})
+      })
+  })
+
+  // 10. Update record status (processing | finished)
+router.post('/api/manage/record/updateStatus', (req, res) => {
+    const {recordId, status} = req.body
+    console.log(req.body)
+    RecordModel.findOneAndUpdate({_id: recordId}, {status})
+      .then(oldRecord => {
+        res.send({status: 0})
+      })
+      .catch(error => {
+        console.error('Update Record Status Exception', error)
+        res.send({status: 1, msg: 'Update Record Status Exception, Please Try Again!'})
+      })
+  })
+
+  // 11. add role
+router.post('/api/manage/role/add', (req, res) => {
+  const {roleName} = req.body
+  RoleModel.create({name: roleName})
+    .then(role => {
+      res.send({status: 0, data: role})
+    })
+    .catch(error => {
+      console.error('Add Role Exception', error)
+      res.send({status: 1, msg: 'Add Role Exception, Please Try Again!'})
+    })
+})
+
+// 12. get role's list
+router.get('/api/manage/role/list', (req, res) => {
+  RoleModel.find()
+    .then(roles => {
+      res.send({status: 0, data: roles})
+    })
+    .catch(error => {
+      console.error('Get Role List Exception', error)
+      res.send({status: 1, msg: 'Get Role List Exception, Please Try Again'})
+    })
+})
+
+// 13. Update role (Setting permissions)
+router.post('/api/manage/role/update', (req, res) => {
+  const role = req.body
+  role.auth_time = Date.now()
+  RoleModel.findOneAndUpdate({_id: role._id}, role)
+    .then(oldRole => {
+      res.send({status: 0, data: {...oldRole._doc, ...role}})
+    })
+    .catch(error => {
+      console.error('Setting permissions Exception', error)
+      res.send({status: 1, msg: 'Setting permissions Exception, Please Try Again'})
+    })
+})
+
+//14. delete the role
+router.post('/api/manage/role/delete', (req, res) => {
+  const {roleId} = req.body
+  RoleModel.deleteOne({_id: roleId})
+    .then((doc) => {
+      res.send({status: 0})
+    })
+})
+
 function pageFilter(arr, pageNum, pageSize) {
     pageNum = pageNum * 1
     pageSize = pageSize * 1

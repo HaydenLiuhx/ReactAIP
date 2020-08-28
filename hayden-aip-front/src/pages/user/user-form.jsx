@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
-    Form,
     Select,
     Input
 } from 'antd'
+import { Form } from '@ant-design/compatible'
 const Option = Select.Option
 const Item = Form.Item
 /*

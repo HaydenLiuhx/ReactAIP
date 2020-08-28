@@ -56,7 +56,7 @@ export default class RecordDetail extends Component {
                     <Item>
                         <span className="left">Pictures:</span>
                         <span className="img">
-                            <img
+                            {/* <img
                             className="record-img" 
                             src="https://images-na.ssl-images-amazon.com/images/I/81f1sNBXtOL._AC_SX679_.jpg" 
                             alt=""
@@ -65,12 +65,12 @@ export default class RecordDetail extends Component {
                             className="record-img"  
                             src="https://images-na.ssl-images-amazon.com/images/I/71JF8H6rCxL._AC_SX679_.jpg" 
                             alt=""
-                            ></img>
-                            {/* {
+                            ></img> */}
+                            {
                                 imgs.map(img => (
                                     <img key={img} className="record-img" src={BASE_IMG_URL + img} alt="img" />
                                 ) )
-                            } */}
+                            }
                         </span>
                     </Item>
                     <Item>

@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Icon, message } from 'antd'
+import { Card, Input, Button, message, Select } from 'antd'
 import { Form } from '@ant-design/compatible'
 import LinkButton from '../../components/link-button'
 import PicturesWall from './pictures-wall'
 import RichTextEditor from  './rich-text-editor'
-import { reqAddOrUpdateRecord } from '../../api'
+import { reqAddOrUpdateRecord, reqUsers } from '../../api'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 const { Item } = Form
 const { TextArea } = Input;
+const Option = Select.Option
 /*
 RecordAddUpdate
 */
 class RecordAddUpdate extends Component {
-    state = {}
+    // static propTypes = {
+    //     users: PropTypes.array.isRequired //可能为undefined
+    // }
+    state = {
+        users: [],
+        roles: []
+    }
     /* 
         Create a container to store the label object identified by ref
         Child -> Parent 
@@ -21,15 +29,25 @@ class RecordAddUpdate extends Component {
         this.pw = React.createRef()
         this.editor = React.createRef()
     }
+    getUsers = async () => {
+        const result = await reqUsers()
+        if (result.status === 0) {
+            const { users, roles } = result.data
+            this.setState({
+                users, roles
+            })
+        }
+    }
     submit = async() => {
         // Perform form validation. If passed, send the request
         this.props.form.validateFields(async (err, val) => {
             if (!err) {
                 //1.Collect data and encapsulate it into a record object
-                const {name,desc} = val
+                console.log(val)
+                const {creditor_username,debtor_username,name,desc} = val
                 const imgs = this.pw.current.getImgs()
                 const detail = this.editor.current.getDetail()
-                const record = {name,desc,imgs,detail}
+                const record = {creditor_username,debtor_username,name,desc,imgs,detail}
                 //If it is an update, you need to add _id
                 if(this.isUpdate) {
                     record._id = this.record._id
@@ -46,6 +64,9 @@ class RecordAddUpdate extends Component {
             }
         })
     }
+    componentDidMount() {
+        this.getUsers()
+    }
     UNSAFE_componentWillMount() {
         const record = this.props.location.state
         //Force conversion of bool type, save the update flag
@@ -54,6 +75,7 @@ class RecordAddUpdate extends Component {
         console.log(this.record)
     }   
     render() {
+        const { users } = this.state
         const { isUpdate, record } = this
         const { imgs, detail } = record
         const formItemLayout = {
@@ -63,7 +85,7 @@ class RecordAddUpdate extends Component {
         const title = (
             <span>
                 <LinkButton onClick={() => this.props.history.goBack()}>
-                    <Icon type="arrow-left" style={{ fontSize: 20 }}></Icon>
+                <ArrowLeftOutlined style={{ fontSize: 20 }}/>
                 </LinkButton>
                 <span>{isUpdate ? 'Update Record' : 'Add Record'}</span>
             </span>
@@ -72,6 +94,36 @@ class RecordAddUpdate extends Component {
         return (
             <Card title={title}>
                 <Form {...formItemLayout}>
+                    <Item label='Creditor'>
+                        {getFieldDecorator('creditor_username', {
+                            initialValue: record.creditor_username,
+                            rules: [
+                                { required: true, message: 'Must Input Creditor Name!' }
+                            ]
+                    })(
+                        <Select>
+                            {
+                            users.map(
+                                user => <Option key={user._id} value={user._id}>{user.username}</Option>)
+                            }
+                        </Select>
+                    )}
+                    </Item>
+                    <Item label='Debtor'>
+                    {getFieldDecorator('debtor_username', {
+                        initialValue: record.debtor_username,
+                        rules: [
+                            { required: true, message: 'Must Input Debtor Name!' }
+                        ]
+                    })(
+                        <Select>
+                            {
+                            users.map(
+                                user => <Option key={user._id} value={user._id}>{user.username}</Option>)
+                            }
+                        </Select>
+                    )}
+                    </Item>
                     <Item label="Record Name">
                     {
                             getFieldDecorator('name', {

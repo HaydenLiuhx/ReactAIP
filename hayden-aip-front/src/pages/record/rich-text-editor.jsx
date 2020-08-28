@@ -14,16 +14,16 @@ export default class RichTextEditor extends Component {
     }
 
     state = {
-        editorState: EditorState.createEmpty(), //创建了一个没有内容的编辑对象
+        editorState: EditorState.createEmpty(), //Create an empty edited object
     }
 
     //ref:https://jpuri.github.io/react-draft-wysiwyg/#/docs
     constructor(props) {
         super(props);
         const html = this.props.detail
-        if (html) { //如果有值,根据html格式创建一个对应的编辑对象
+        if (html) { //If there is a value, create a corresponding edit object according to the html format
             const contentBlock = htmlToDraft(html);
-            if (contentBlock) { //判断块
+            if (contentBlock) { //block????????
                 const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
                 const editorState = EditorState.createWithContent(contentState);
                 this.state = {
@@ -31,14 +31,14 @@ export default class RichTextEditor extends Component {
                 };
             } else {
                 this.state = {
-                    editorState: EditorState.createEmpty(), //创建了一个没有内容的编辑对象
+                    editorState: EditorState.createEmpty(), //Create an empty edited object
                 }
             }
         }
     }
 
     /* 
-    传入过程中实时回调
+    Real-time callback during the incoming process
     */
     //onEditorStateChange: Function = (editorState) => {
     onEditorStateChange = (editorState) => {
@@ -48,11 +48,10 @@ export default class RichTextEditor extends Component {
     };
 
     getDetail = () => {
-        //返回html格式的文本
+        //Return text in html format
         return draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
     }
 
-    //改成箭头函数
     uploadImageCallBack= (file) => {
         return new Promise(
           (resolve, reject) => {
@@ -63,7 +62,7 @@ export default class RichTextEditor extends Component {
             xhr.send(data);
             xhr.addEventListener('load', () => {
               const response = JSON.parse(xhr.responseText);
-              const url = response.data.url //得到url
+              const url = response.data.url //get url
               resolve({data: {link: url}})
             });
             xhr.addEventListener('error', () => {

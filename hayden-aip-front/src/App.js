@@ -1,9 +1,9 @@
 /*
-应用根组件
+Application root component
 
-该类是继承react提供的component，export default App;
-是为了将App公开，index.js才能够引用。App.js继承了component的话，必须使用render进行渲染。
-return的内容是类似于html结构的内容，就是jsx，jsx语法是react的主要语法。
+This class inherits the component provided by react, export default App;
+It is to make the App public so that index.js can reference it. If App.js inherits component, it must be rendered using render.
+The content of return is similar to the content of the html structure, which is jsx. The jsx syntax is the main syntax of react.
 */
 import React from 'react';
 import { Component } from "react";
@@ -15,10 +15,10 @@ import Admin from './pages/admin/admin'
 export default class App extends Component {
 
     render() {
-        //嵌套的标签,'/'减少一层
+        //Nested tags,'/' is reduced by one level
         return (
             <BrowserRouter>
-            {/* 只匹配其中一个 */}
+            {/* Match only one of them */}
             <Switch>   
             <Route path='/login' component={Login}></Route>
             <Route path='/' component={Admin}></Route>

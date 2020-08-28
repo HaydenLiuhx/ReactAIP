@@ -43,10 +43,11 @@ class RecordAddUpdate extends Component {
         this.props.form.validateFields(async (err, val) => {
             if (!err) {
                 //1.Collect data and encapsulate it into a record object
-                const {name,desc} = val
+                console.log(val)
+                const {creditor_username,debtor_username,name,desc} = val
                 const imgs = this.pw.current.getImgs()
                 const detail = this.editor.current.getDetail()
-                const record = {name,desc,imgs,detail}
+                const record = {creditor_username,debtor_username,name,desc,imgs,detail}
                 //If it is an update, you need to add _id
                 if(this.isUpdate) {
                     record._id = this.record._id
@@ -85,7 +86,6 @@ class RecordAddUpdate extends Component {
             <span>
                 <LinkButton onClick={() => this.props.history.goBack()}>
                 <ArrowLeftOutlined style={{ fontSize: 20 }}/>
-                    {/* <Icon type="arrow-left" ></Icon> */}
                 </LinkButton>
                 <span>{isUpdate ? 'Update Record' : 'Add Record'}</span>
             </span>
@@ -97,6 +97,9 @@ class RecordAddUpdate extends Component {
                     <Item label='Creditor'>
                         {getFieldDecorator('creditor_username', {
                             initialValue: record.creditor_username,
+                            rules: [
+                                { required: true, message: 'Must Input Creditor Name!' }
+                            ]
                     })(
                         <Select>
                             {
@@ -109,6 +112,9 @@ class RecordAddUpdate extends Component {
                     <Item label='Debtor'>
                     {getFieldDecorator('debtor_username', {
                         initialValue: record.debtor_username,
+                        rules: [
+                            { required: true, message: 'Must Input Debtor Name!' }
+                        ]
                     })(
                         <Select>
                             {

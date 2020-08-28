@@ -5,7 +5,7 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
-const dirPath = path.join(__dirname, '..', 'blog-server/public/upload')
+const dirPath = path.join(__dirname, '..', 'hayden-aip-back/public/upload')
 
 const storage = multer.diskStorage({
   // destination: 'upload', //string时,服务启动将会自动创建文件夹
@@ -49,7 +49,7 @@ module.exports = function fileUpload(router) {
         status: 0,
         data: {
           name: file.filename,
-          url: 'http://localhost:4000/upload/' + file.filename
+          url: 'http://localhost:7000/upload/' + file.filename
         }
       })
 

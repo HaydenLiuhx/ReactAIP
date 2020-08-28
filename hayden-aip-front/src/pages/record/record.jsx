@@ -4,8 +4,8 @@ import './record.less'
 import RecordHome from './home'
 import RecordAddUpdate from './add-update'
 import RecordDetail from './detail'
-
 export default class Record extends Component {
+    
     render() {
         return (
             <Switch>

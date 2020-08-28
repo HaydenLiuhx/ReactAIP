@@ -81,6 +81,15 @@ export default class RecordHome extends Component {
             }
         ]
     }
+    // getUsers = async () => {
+    //     const result = await reqUsers()
+    //     if (result.status === 0) {
+    //         const { users, roles } = result.data
+    //         this.setState({
+    //             users, roles
+    //         })
+    //     }
+    // }
     getRecords = async (pageNum) => {
         this.setState({ loading: true })
         this.pageNum = pageNum

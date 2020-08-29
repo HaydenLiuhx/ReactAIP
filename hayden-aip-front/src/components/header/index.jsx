@@ -48,19 +48,25 @@ class Header extends Component {
     getTitle = () => {
         const path = this.props.location.pathname
         let title
+        
         menuList.forEach(item => {
-            if(item.key===path) {
-                title = item.title
-            }
-            else if (item.children) {
-                const cItem = item.children.find(
-                    cItem => path.indexOf(cItem.key) === 0
-                    )
+            // if(item.key===path) {
+            //     title = item.title
+                
+            // }
+            if (item.children) {
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
+                //console.log(path)
                 if(cItem) {
                     title = cItem.title
                 }
             }
+            else if (path.indexOf(item.key) === 0){
+                title = item.title
+            }
+            
         })
+        
         return title
     }
     getWeather = async() => {
